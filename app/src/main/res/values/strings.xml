@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">InstagramClient</string>
+    <string name="theme_name">Введите название темы:</string>
 </resources>

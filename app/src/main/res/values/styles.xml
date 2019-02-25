@@ -12,4 +12,13 @@
         <item name="colorAccent">@color/colorBlueAccent</item>
     </style>
 
+    <style name="EditTextHintStyle" parent="TextAppearance.AppCompat.Small">
+        <item name="android:textColor">@color/colorPinkPrimaryDark</item>
+    </style>
+
+    <style name="EditTextStyle" parent="PinkTheme">
+        <item name="colorControlNormal">@color/colorPinkPrimary</item>
+        <item name="colorControlActivated">@color/colorPinkPrimaryDark</item>
+    </style>
+
 </resources>
