@@ -1,4 +1,7 @@
 <resources>
-    <string name="app_name">InstagramClient</string>
-    <string name="theme_name">Введите название темы:</string>
+    <string name="app_name" translatable="false">Instagram Client</string>
+    <string name="theme_name" translatable="false">Введите название темы:</string>
+    <string name="enter_password">Enter password</string>
+    <string name="enter_login">Enter login</string>
+    <string name="OK">OK</string>
 </resources>
