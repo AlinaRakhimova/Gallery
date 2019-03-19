@@ -10,6 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import rakhimova.ru.instagramclient.R;
@@ -48,17 +51,30 @@ public class PhotoFragment extends Fragment {
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String userLogin = String.valueOf(login.getEditText().getText());
-                if (userLogin.equals(EMPTY_STRING)) {
-                    login.getEditText().setError("Введите логин");
-                } else {
-                    String userPassword = String.valueOf(password.getEditText().getText());
-                    if (userPassword.equals(EMPTY_STRING)) {
-                        password.getEditText().setError("Введите пароль");
-                    }
-                }
+                checkLogin();
+                checkPassword();
             }
         });
+    }
+
+    public void checkLogin() {
+        String userLogin = String.valueOf(login.getEditText().getText());
+        if (userLogin.equals(EMPTY_STRING)) {
+            login.getEditText().setError("Введите логин");
+            YoYo.with(Techniques.Shake)
+                    .repeat(2)
+                    .playOn(login);
+        }
+    }
+
+    public void checkPassword() {
+        String userPassword = String.valueOf(password.getEditText().getText());
+        if (userPassword.equals(EMPTY_STRING)) {
+            password.getEditText().setError("Введите пароль");
+            YoYo.with(Techniques.Shake)
+                    .repeat(2)
+                    .playOn(password);
+        }
     }
 
     @Override
