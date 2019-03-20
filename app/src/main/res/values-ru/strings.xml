@@ -3,4 +3,6 @@
     <string name="enter_password">Введите пароль</string>
     <string name="enter_login">Введите логин</string>
     <string name="OK">Применить</string>
+    <string name="sign_in">Sign in</string>
+    <string name="gallery">Gallery</string>
 </resources>

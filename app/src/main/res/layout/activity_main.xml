@@ -12,21 +12,17 @@
         android:layout_height="match_parent">
 
         <fragment
-            android:id="@+id/photo_fragment"
-            android:name="rakhimova.ru.instagramclient.ui.PhotoFragment"
+            android:id="@+id/fl_content"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:layout="@layout/fragment_photo" />
+            android:layout_height="0dp" />
     </FrameLayout>
 
-    <include layout="@layout/bottom_sheet" />
-
-    <android.support.design.widget.FloatingActionButton
-        android:layout_width="wrap_content"
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/navigation"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@android:drawable/btn_star_big_off"
-        app:backgroundTint="@drawable/round"
-        app:layout_anchor="@+id/bottom_sheet"
-        app:layout_anchorGravity="top|end" />
+        android:layout_gravity="bottom"
+        android:background="@color/colorBlueAccent"
+        app:menu="@menu/navigation" />
 
 </android.support.design.widget.CoordinatorLayout>
