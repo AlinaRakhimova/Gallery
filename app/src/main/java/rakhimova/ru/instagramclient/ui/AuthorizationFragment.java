@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
@@ -17,7 +18,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import rakhimova.ru.instagramclient.R;
 
-public class PhotoFragment extends Fragment {
+public class AuthorizationFragment extends Fragment {
 
     private static final String EMPTY_STRING = "";
 
@@ -30,7 +31,11 @@ public class PhotoFragment extends Fragment {
     @BindView(R.id.ok)
     MaterialButton ok;
 
-    public PhotoFragment() {
+    public AuthorizationFragment() {
+    }
+
+    public static AuthorizationFragment newInstance() {
+        return new AuthorizationFragment();
     }
 
     @Override
@@ -41,7 +46,7 @@ public class PhotoFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              final Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.fragment_photo, container, false);
+        final View view = inflater.inflate(R.layout.fragment_authorization, container, false);
         ButterKnife.bind(this, view);
         initUI();
         return view;
@@ -58,7 +63,9 @@ public class PhotoFragment extends Fragment {
     }
 
     public void checkLogin() {
-        String userLogin = String.valueOf(login.getEditText().getText());
+        EditText editLogin = login.getEditText();
+        if (editLogin == null) return;
+        String userLogin = String.valueOf(editLogin.getText());
         if (userLogin.equals(EMPTY_STRING)) {
             login.getEditText().setError("Введите логин");
             YoYo.with(Techniques.Shake)
@@ -68,7 +75,9 @@ public class PhotoFragment extends Fragment {
     }
 
     public void checkPassword() {
-        String userPassword = String.valueOf(password.getEditText().getText());
+        EditText editPassword = password.getEditText();
+        if (editPassword == null) return;
+        String userPassword = String.valueOf(editPassword.getText());
         if (userPassword.equals(EMPTY_STRING)) {
             password.getEditText().setError("Введите пароль");
             YoYo.with(Techniques.Shake)

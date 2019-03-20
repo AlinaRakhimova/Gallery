@@ -4,4 +4,6 @@
     <string name="enter_password">Enter password</string>
     <string name="enter_login">Enter login</string>
     <string name="OK">OK</string>
+    <string name="sign_in">Sign in</string>
+    <string name="gallery">Gallery</string>
 </resources>
