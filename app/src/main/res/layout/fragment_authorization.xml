@@ -49,4 +49,14 @@
         android:layout_centerHorizontal="true"
         android:text="@string/OK" />
 
+    <ImageView
+        android:id="@+id/share_star"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="30dp"
+        android:background="@drawable/round"
+        app:srcCompat="@android:drawable/btn_star" />
+
 </RelativeLayout>

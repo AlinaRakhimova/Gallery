@@ -6,10 +6,14 @@ import android.support.annotation.NonNull;
 import android.support.design.button.MaterialButton;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
+import android.transition.ArcMotion;
+import android.transition.ChangeBounds;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.OvershootInterpolator;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
@@ -30,6 +34,9 @@ public class AuthorizationFragment extends Fragment {
 
     @BindView(R.id.ok)
     MaterialButton ok;
+
+    @BindView(R.id.share_star)
+    ImageView star;
 
     public AuthorizationFragment() {
     }
@@ -53,12 +60,25 @@ public class AuthorizationFragment extends Fragment {
     }
 
     private void initUI() {
-        ok.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                checkLogin();
-                checkPassword();
+        star.setOnClickListener((v) -> {
+            Fragment galleryFragment = GalleryFragment.newInstance();
+            ChangeBounds changeBounds = new ChangeBounds();
+            changeBounds.setPathMotion(new ArcMotion());
+            changeBounds.setInterpolator(new OvershootInterpolator(1.5f));
+            galleryFragment.setSharedElementEnterTransition(changeBounds);
+
+            if (getFragmentManager() != null) {
+                getFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fl_content, galleryFragment)
+                        .addToBackStack(this.getClass().getName())
+                        .addSharedElement(star, getString(R.string.share_star))
+                        .commit();
             }
+        });
+        ok.setOnClickListener(v -> {
+            checkLogin();
+            checkPassword();
         });
     }
 
