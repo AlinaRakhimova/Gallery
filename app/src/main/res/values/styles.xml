@@ -4,12 +4,14 @@
         <item name="colorPrimary">@color/colorPinkPrimary</item>
         <item name="colorPrimaryDark">@color/colorPinkPrimaryDark</item>
         <item name="colorAccent">@color/colorPinkAccent</item>
+        <item name="android:windowContentTransitions">true</item>
     </style>
 
     <style name="BlueTheme" parent="Theme.MaterialComponents">
         <item name="colorPrimary">@color/colorBluePrimary</item>
         <item name="colorPrimaryDark">@color/colorBluePrimaryDark</item>
         <item name="colorAccent">@color/colorBlueAccent</item>
+        <item name="android:windowContentTransitions">true</item>
     </style>
 
     <style name="EditTextHintStyle" parent="TextAppearance.AppCompat.Small">
