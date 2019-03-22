@@ -44,11 +44,19 @@ public class GalleryFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_photo_list, container, false);
+        initUI();
+        return view;
+    }
+
+    private void initUI() {
         galleryAdapter = new GalleryAdapter(createPhotoList());
         showPhotoRecycler();
         SnapHelper snapHelper = new LinearSnapHelper();
         snapHelper.attachToRecyclerView(photoRecycler);
+        swipeItem();
+    }
 
+    private void swipeItem() {
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.Callback() {
             @Override
             public int getMovementFlags(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
@@ -73,7 +81,6 @@ public class GalleryFragment extends Fragment {
             }
         });
         itemTouchHelper.attachToRecyclerView(photoRecycler);
-        return view;
     }
 
     private void showPhotoRecycler() {
