@@ -41,6 +41,11 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
         return itemsPhoto.size();
     }
 
+    public void delete(int adapterPosition) {
+        itemsPhoto.remove(adapterPosition);
+        notifyItemRemoved(adapterPosition);
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder {
         private final ImageView photoView;
         private final TextView titleView;
@@ -51,5 +56,6 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
             photoView = view.findViewById(R.id.content_photo);
         }
     }
+
 }
 
