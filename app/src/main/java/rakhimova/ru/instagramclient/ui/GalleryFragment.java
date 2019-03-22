@@ -5,7 +5,10 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SnapHelper;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +25,7 @@ public class GalleryFragment extends Fragment {
     @BindView(R.id.list)
     RecyclerView photoRecycler;
     private int mColumnCount = 1;
+    private GalleryAdapter galleryAdapter;
 
     public GalleryFragment() {
     }
@@ -40,7 +44,35 @@ public class GalleryFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_photo_list, container, false);
+        galleryAdapter = new GalleryAdapter(createPhotoList());
         showPhotoRecycler();
+        SnapHelper snapHelper = new LinearSnapHelper();
+        snapHelper.attachToRecyclerView(photoRecycler);
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.Callback() {
+            @Override
+            public int getMovementFlags(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
+                int dragFlags = 0;
+                int swipeFlags = ItemTouchHelper.END;
+                return makeMovementFlags(dragFlags, swipeFlags);
+            }
+
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder viewHolder1) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
+                galleryAdapter.delete(viewHolder.getAdapterPosition());
+            }
+
+            @Override
+            public boolean isItemViewSwipeEnabled() {
+                return true;
+            }
+        });
+        itemTouchHelper.attachToRecyclerView(photoRecycler);
         return view;
     }
 
@@ -50,7 +82,7 @@ public class GalleryFragment extends Fragment {
         } else {
             photoRecycler.setLayoutManager(new GridLayoutManager(getActivity(), mColumnCount));
         }
-        photoRecycler.setAdapter(new GalleryAdapter(createPhotoList()));
+        photoRecycler.setAdapter(galleryAdapter);
     }
 
     private ArrayList<ItemPhoto> createPhotoList() {
