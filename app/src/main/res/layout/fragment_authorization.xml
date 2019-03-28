@@ -57,6 +57,17 @@
         android:layout_alignParentBottom="true"
         android:layout_margin="30dp"
         android:background="@drawable/round"
+        android:contentDescription="@string/app_name"
         app:srcCompat="@android:drawable/btn_star" />
+
+    <ImageView
+        android:id="@+id/loop_anim"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/photo_animated"
+        android:visibility="invisible" />
 
 </RelativeLayout>

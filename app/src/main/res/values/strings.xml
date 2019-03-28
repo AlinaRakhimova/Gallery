@@ -7,4 +7,5 @@
     <string name="sign_in">Sign in</string>
     <string name="gallery">Gallery</string>
     <string name="share_star" translatable="false">Star</string>
+    <string name="loop" translatable="false">loop</string>
 </resources>
