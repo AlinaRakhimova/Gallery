@@ -93,19 +93,27 @@ public class AuthorizationFragment extends Fragment {
         });
         ok.setOnClickListener(v -> {
             if (checkLogin() && checkPassword()) {
-                loop.setVisibility(View.VISIBLE);
-                Drawable drawable = loop.getDrawable();
-                if (drawable instanceof AnimatedVectorDrawable) {
-                    ((AnimatedVectorDrawable) drawable).start();
-                } else if (drawable instanceof AnimatedVectorDrawableCompat) {
-                    ((AnimatedVectorDrawableCompat) drawable).start();
-                }
+                setLoopAnimation();
             }
         });
+        setSignInMessageSpan();
+    }
+
+    private void setSignInMessageSpan() {
         SpannableString spannableString = new SpannableString(signInMessage.getText());
         spannableString.setSpan(new RelativeSizeSpan(1.5f), 0, 18, Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
         spannableString.setSpan(new StyleSpan(Typeface.BOLD), 0, 18, Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
         signInMessage.setText(spannableString);
+    }
+
+    private void setLoopAnimation() {
+        loop.setVisibility(View.VISIBLE);
+        Drawable drawable = loop.getDrawable();
+        if (drawable instanceof AnimatedVectorDrawable) {
+            ((AnimatedVectorDrawable) drawable).start();
+        } else if (drawable instanceof AnimatedVectorDrawableCompat) {
+            ((AnimatedVectorDrawableCompat) drawable).start();
+        }
     }
 
     public boolean checkLogin() {
@@ -145,4 +153,5 @@ public class AuthorizationFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
     }
+
 }
