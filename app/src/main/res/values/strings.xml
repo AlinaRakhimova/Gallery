@@ -8,4 +8,5 @@
     <string name="gallery">Gallery</string>
     <string name="share_star" translatable="false">Star</string>
     <string name="loop" translatable="false">loop</string>
+    <string name="message">Login and password are expected</string>
 </resources>
