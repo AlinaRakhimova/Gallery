@@ -68,7 +68,7 @@ public class AuthorizationFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              final Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.fragment_authorization, container, false);
+        final View view = inflater.inflate(R.layout.fragment_favorites, container, false);
         ButterKnife.bind(this, view);
         initUI();
         return view;
