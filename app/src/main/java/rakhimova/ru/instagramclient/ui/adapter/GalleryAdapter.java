@@ -11,7 +11,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import rakhimova.ru.instagramclient.R;
-import rakhimova.ru.instagramclient.ui.ItemPhoto;
+import rakhimova.ru.instagramclient.ui.entity.ItemPhoto;
 
 public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHolder> {
 

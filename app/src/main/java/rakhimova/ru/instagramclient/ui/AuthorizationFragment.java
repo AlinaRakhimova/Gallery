@@ -1,11 +1,19 @@
 package rakhimova.ru.instagramclient.ui;
 
 import android.content.Context;
+import android.graphics.Typeface;
+import android.graphics.drawable.AnimatedVectorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.button.MaterialButton;
 import android.support.design.widget.TextInputLayout;
+import android.support.graphics.drawable.AnimatedVectorDrawableCompat;
 import android.support.v4.app.Fragment;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.RelativeSizeSpan;
+import android.text.style.StyleSpan;
 import android.transition.ArcMotion;
 import android.transition.ChangeBounds;
 import android.view.LayoutInflater;
@@ -14,6 +22,7 @@ import android.view.ViewGroup;
 import android.view.animation.OvershootInterpolator;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
@@ -38,6 +47,12 @@ public class AuthorizationFragment extends Fragment {
     @BindView(R.id.share_star)
     ImageView star;
 
+    @BindView(R.id.loop_anim)
+    ImageView loop;
+
+    @BindView(R.id.sign_in_message)
+    TextView signInMessage;
+
     public AuthorizationFragment() {
     }
 
@@ -53,7 +68,7 @@ public class AuthorizationFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              final Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.fragment_authorization, container, false);
+        final View view = inflater.inflate(R.layout.fragment_favorites, container, false);
         ButterKnife.bind(this, view);
         initUI();
         return view;
@@ -77,33 +92,56 @@ public class AuthorizationFragment extends Fragment {
             }
         });
         ok.setOnClickListener(v -> {
-            checkLogin();
-            checkPassword();
+            if (checkLogin() && checkPassword()) {
+                setLoopAnimation();
+            }
         });
+        setSignInMessageSpan();
     }
 
-    public void checkLogin() {
+    private void setSignInMessageSpan() {
+        SpannableString spannableString = new SpannableString(signInMessage.getText());
+        spannableString.setSpan(new RelativeSizeSpan(1.5f), 0, 18, Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
+        spannableString.setSpan(new StyleSpan(Typeface.BOLD), 0, 18, Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
+        signInMessage.setText(spannableString);
+    }
+
+    private void setLoopAnimation() {
+        loop.setVisibility(View.VISIBLE);
+        Drawable drawable = loop.getDrawable();
+        if (drawable instanceof AnimatedVectorDrawable) {
+            ((AnimatedVectorDrawable) drawable).start();
+        } else if (drawable instanceof AnimatedVectorDrawableCompat) {
+            ((AnimatedVectorDrawableCompat) drawable).start();
+        }
+    }
+
+    public boolean checkLogin() {
         EditText editLogin = login.getEditText();
-        if (editLogin == null) return;
+        if (editLogin == null) return false;
         String userLogin = String.valueOf(editLogin.getText());
         if (userLogin.equals(EMPTY_STRING)) {
             login.getEditText().setError("Введите логин");
             YoYo.with(Techniques.Shake)
                     .repeat(2)
                     .playOn(login);
+            return false;
         }
+        return true;
     }
 
-    public void checkPassword() {
+    public boolean checkPassword() {
         EditText editPassword = password.getEditText();
-        if (editPassword == null) return;
+        if (editPassword == null) return false;
         String userPassword = String.valueOf(editPassword.getText());
         if (userPassword.equals(EMPTY_STRING)) {
             password.getEditText().setError("Введите пароль");
             YoYo.with(Techniques.Shake)
                     .repeat(2)
                     .playOn(password);
+            return false;
         }
+        return true;
     }
 
     @Override
@@ -115,6 +153,5 @@ public class AuthorizationFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
     }
-
 
 }

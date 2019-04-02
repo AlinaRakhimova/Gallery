@@ -6,4 +6,5 @@
     <string name="sign_in">Войти</string>
     <string name="gallery">Галерея</string>
     <string name="theme_name">Введите название темы</string>
+    <string name="message">Необходимо ввести логин и пароль</string>
 </resources>

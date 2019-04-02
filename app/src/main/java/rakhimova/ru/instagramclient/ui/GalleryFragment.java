@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import rakhimova.ru.instagramclient.R;
 import rakhimova.ru.instagramclient.ui.adapter.GalleryAdapter;
+import rakhimova.ru.instagramclient.ui.entity.ItemPhoto;
 
 public class GalleryFragment extends Fragment {
 

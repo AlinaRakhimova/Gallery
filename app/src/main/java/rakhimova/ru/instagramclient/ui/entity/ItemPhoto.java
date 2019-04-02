@@ -1,11 +1,11 @@
-package rakhimova.ru.instagramclient.ui;
+package rakhimova.ru.instagramclient.ui.entity;
 
 public class ItemPhoto {
 
     private String title;
     private int imageUrl;
 
-    ItemPhoto(String title, int imageUrl) {
+    public ItemPhoto(String title, int imageUrl) {
         this.title = title;
         this.imageUrl = imageUrl;
     }
