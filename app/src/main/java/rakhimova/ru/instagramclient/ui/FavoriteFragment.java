@@ -20,18 +20,18 @@ import rakhimova.ru.instagramclient.R;
 import rakhimova.ru.instagramclient.ui.adapter.GalleryAdapter;
 import rakhimova.ru.instagramclient.ui.entity.ItemPhoto;
 
-public class GalleryFragment extends Fragment {
+public class FavoriteFragment extends Fragment {
 
-    @BindView(R.id.list)
+    @BindView(R.id.favorite_list)
     RecyclerView photoRecycler;
 
     private GalleryAdapter galleryAdapter;
 
-    public GalleryFragment() {
+    public FavoriteFragment() {
     }
 
-    public static GalleryFragment newInstance() {
-        return new GalleryFragment();
+    public static FavoriteFragment newInstance() {
+        return new FavoriteFragment();
     }
 
     @Override
@@ -42,7 +42,7 @@ public class GalleryFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_photo_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_favorites_list, container, false);
         ButterKnife.bind(this, view);
         initUI();
         return view;
@@ -91,8 +91,6 @@ public class GalleryFragment extends Fragment {
     private ArrayList<ItemPhoto> createPhotoList() {
         ArrayList<ItemPhoto> itemsPhoto = new ArrayList<>();
         itemsPhoto.add(new ItemPhoto("Forest", R.drawable.forest));
-        itemsPhoto.add(new ItemPhoto("Field", R.drawable.field));
-        itemsPhoto.add(new ItemPhoto("Lake", R.drawable.lake));
         return itemsPhoto;
     }
 

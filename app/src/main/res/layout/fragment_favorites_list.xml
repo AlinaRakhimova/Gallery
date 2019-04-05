@@ -7,14 +7,14 @@
     android:orientation="vertical">
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/list"
-        android:name="rakhimova.ru.instagramclient.ui.GalleryFragment"
+        android:id="@+id/favorite_list"
+        android:name="rakhimova.ru.instagramclient.ui.FavoriteFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         app:layout_constraintTop_toTopOf="parent"
-        tools:context="rakhimova.ru.instagramclient.ui.GalleryFragment"
-        tools:listitem="@layout/fragment_photo" />
+        tools:context="rakhimova.ru.instagramclient.ui.FavoriteFragment"
+        tools:listitem="@layout/fragment_favorite" />
 
 </android.support.constraint.ConstraintLayout>
 
