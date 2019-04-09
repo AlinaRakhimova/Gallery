@@ -25,8 +25,8 @@
         app:tabPaddingEnd="0dp"
         app:tabPaddingStart="0dp"
         app:tabRippleColor="@null"
-        app:tabSelectedTextColor="@color/colorBluePrimary"
-        app:tabTextColor="@color/colorBluePrimary" />
+        app:tabSelectedTextColor="@color/colorBluePrimaryDark"
+        app:tabTextColor="@color/colorBluePrimaryDark" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/viewPager"
