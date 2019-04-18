@@ -31,8 +31,8 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(GalleryFragment.newInstance(), String.valueOf(R.string.gallery));
-        adapter.addFragment(FavoriteFragment.newInstance(), String.valueOf(R.string.favorite));
+        adapter.addFragment(GalleryFragment.newInstance(), "Gallery");
+        adapter.addFragment(FavoriteFragment.newInstance(), "Favorite");
         viewPager.setAdapter(adapter);
         viewPager.setPageTransformer(true, new CubeOutDepthTransformation());
         tabLayout.setupWithViewPager(viewPager);

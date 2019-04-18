@@ -33,7 +33,6 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.titleView.setText(itemsPhoto.get(position).getTitle());
         holder.photoView.setImageResource(itemsPhoto.get(position).getImageUrl());
-
     }
 
     @Override
