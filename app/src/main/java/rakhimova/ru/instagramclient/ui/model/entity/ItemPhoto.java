@@ -1,4 +1,4 @@
-package rakhimova.ru.instagramclient.ui.entity;
+package rakhimova.ru.instagramclient.ui.model.entity;
 
 public class ItemPhoto {
 

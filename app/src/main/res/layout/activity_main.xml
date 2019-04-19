@@ -2,6 +2,7 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="match_parent">
 
     <android.support.v7.widget.Toolbar
@@ -13,47 +14,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <android.support.design.widget.TabLayout
-        android:id="@+id/tabLayout"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        app:tabGravity="fill"
-        app:tabMode="fixed"
-        app:tabPaddingEnd="0dp"
-        app:tabPaddingStart="0dp"
-        app:tabRippleColor="@null"
-        app:tabSelectedTextColor="@color/colorBluePrimaryDark"
-        app:tabTextColor="@color/colorBluePrimaryDark" />
+        android:layout_height="match_parent"
+        android:layout_marginTop="46dp">
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/viewPager"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:elevation="0dp"
-        app:elevation="0dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tabLayout" />
-
-    <com.rd.PageIndicatorView
-        android:id="@+id/pageIndicatorView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:piv_animationType="scale"
-        app:piv_dynamicCount="true"
-        app:piv_interactiveAnimation="true"
-        app:piv_radius="6dp"
-        app:piv_selectedColor="@color/colorBluePrimaryDark"
-        app:piv_unselectedColor="@color/colorBluePrimary"
-        app:piv_viewPager="@id/viewPager" />
+        <fragment
+            android:id="@+id/fragment_photo_list"
+            android:name="rakhimova.ru.instagramclient.ui.view.GalleryFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:layout="@layout/fragment_photo_list" />
+    </FrameLayout>
 
 </android.support.constraint.ConstraintLayout>
 
