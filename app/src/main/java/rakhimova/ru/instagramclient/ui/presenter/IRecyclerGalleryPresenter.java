@@ -8,4 +8,5 @@ public interface IRecyclerGalleryPresenter {
 
     int getItemCount();
 
+    void updateCounter();
 }
