@@ -1,13 +1,10 @@
 package rakhimova.ru.instagramclient.ui.presenter;
 
-import android.util.Log;
-
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 
 import java.util.List;
 
-import rakhimova.ru.instagramclient.ui.model.ClickCounter;
 import rakhimova.ru.instagramclient.ui.model.PhotoData;
 import rakhimova.ru.instagramclient.ui.model.entity.ItemPhoto;
 import rakhimova.ru.instagramclient.ui.view.GalleryView;
@@ -25,7 +22,6 @@ public class GalleryPresenter extends MvpPresenter<GalleryView> {
     private class RecyclerGalleryPresenter implements IRecyclerGalleryPresenter {
 
         private PhotoData data = new PhotoData();
-        private ClickCounter clickCounter = new ClickCounter();
         private List<ItemPhoto> photoList = data.getPhotoList();
 
         @Override
@@ -39,11 +35,9 @@ public class GalleryPresenter extends MvpPresenter<GalleryView> {
         }
 
         @Override
-        public void updateCounter() {
-            int oldCounter = clickCounter.getCounter();
-            int newCounter = oldCounter + 1;
-            clickCounter.setCounter(newCounter);
-            Log.d("Libraries7", "New click counter: " + newCounter);
+        public void onClickDetail(IViewHolder holder) {
+            ItemPhoto photo = photoList.get(holder.getPos());
+            getViewState().showDetailActivity(photo.getTitle(), photo.getImageUrl());
         }
     }
 

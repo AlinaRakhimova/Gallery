@@ -8,5 +8,6 @@ public interface IRecyclerGalleryPresenter {
 
     int getItemCount();
 
-    void updateCounter();
+    void onClickDetail(IViewHolder iViewHolder);
+
 }

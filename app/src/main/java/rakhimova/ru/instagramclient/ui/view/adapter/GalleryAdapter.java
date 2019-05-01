@@ -35,7 +35,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.position = position;
         presenter.bindView(holder);
-        holder.photoView.setOnClickListener(v -> presenter.updateCounter());
+        holder.photoView.setOnClickListener(v -> presenter.onClickDetail(holder));
     }
 
     @Override
@@ -71,4 +71,3 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
     }
 
 }
-
