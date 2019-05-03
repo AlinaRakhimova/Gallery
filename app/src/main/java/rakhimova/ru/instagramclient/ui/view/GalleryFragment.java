@@ -23,12 +23,14 @@ import rakhimova.ru.instagramclient.ui.view.adapter.GalleryAdapter;
 public class GalleryFragment extends MvpAppCompatFragment implements GalleryView {
 
     public static final int SPAN_COUNT = 2;
+    public static final String URL = "url";
 
     @BindView(R.id.list)
     RecyclerView photoRecycler;
 
     @InjectPresenter
     GalleryPresenter presenter;
+    private GalleryAdapter galleryAdapter;
 
     public GalleryFragment() {
     }
@@ -55,24 +57,21 @@ public class GalleryFragment extends MvpAppCompatFragment implements GalleryView
 
     private void showPhotoRecycler() {
         photoRecycler.setLayoutManager(new GridLayoutManager(getActivity(), SPAN_COUNT));
-        GalleryAdapter galleryAdapter = new GalleryAdapter(presenter.getRecyclerMainPresenter());
+        galleryAdapter = new GalleryAdapter(getActivity(), presenter.getRecyclerMainPresenter());
         photoRecycler.setAdapter(galleryAdapter);
     }
 
     @Override
-    public void showDetailActivity(String title, int url) { //FIXME Удалить перегруженный метод
+    public void showDetailActivity(String url) {
         Intent intent = new Intent(getActivity(), DetailActivity.class);
-        intent.putExtra("title", title);
-        intent.putExtra("url", url);
+        //   intent.putExtra("title", title);
+        intent.putExtra(URL, url);
         startActivity(intent);
     }
 
     @Override
-    public void showDetailActivity(String title, String url) {
-        Intent intent = new Intent(getActivity(), DetailActivity.class);
-        intent.putExtra("title", title);
-        intent.putExtra("url", url);
-        startActivity(intent);
+    public void updateRecyclerView() {
+        galleryAdapter.notifyDataSetChanged();
     }
 
 }

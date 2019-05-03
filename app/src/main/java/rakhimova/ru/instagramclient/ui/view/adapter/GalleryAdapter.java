@@ -1,5 +1,6 @@
 package rakhimova.ru.instagramclient.ui.view.adapter;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,16 +12,18 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import rakhimova.ru.instagramclient.R;
-import rakhimova.ru.instagramclient.ui.model.entity.ItemPhoto;
+import rakhimova.ru.instagramclient.ui.model.GlideLoader;
 import rakhimova.ru.instagramclient.ui.presenter.IRecyclerGalleryPresenter;
 import rakhimova.ru.instagramclient.ui.view.IViewHolder;
 
 public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHolder> {
 
     private final IRecyclerGalleryPresenter presenter;
+    private GlideLoader glideLoader;
 
-    public GalleryAdapter(IRecyclerGalleryPresenter presenter) {
+    public GalleryAdapter(Context context, IRecyclerGalleryPresenter presenter) {
         this.presenter = presenter;
+        glideLoader = new GlideLoader(context);
     }
 
     @NonNull
@@ -59,9 +62,8 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
         }
 
         @Override
-        public void setPhoto(ItemPhoto photo) {
-            titleView.setText(photo.getTitle());
-            photoView.setImageResource(photo.getImageUrl());
+        public void setPhoto(String url) {
+            glideLoader.loadImage(url, photoView);
         }
 
         @Override

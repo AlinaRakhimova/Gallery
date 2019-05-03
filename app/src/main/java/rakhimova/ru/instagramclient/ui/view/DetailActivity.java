@@ -10,9 +10,12 @@ import com.arellomobile.mvp.presenter.InjectPresenter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import rakhimova.ru.instagramclient.R;
+import rakhimova.ru.instagramclient.ui.model.GlideLoader;
 import rakhimova.ru.instagramclient.ui.presenter.DetailPresenter;
 
 public class DetailActivity extends MvpAppCompatActivity implements DetailView {
+
+    public static final String URL = "url";
 
     @BindView(R.id.content_photo)
     ImageView photo;
@@ -22,6 +25,8 @@ public class DetailActivity extends MvpAppCompatActivity implements DetailView {
 
     @InjectPresenter
     DetailPresenter presenter;
+
+    GlideLoader glideLoader = new GlideLoader(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,10 +38,8 @@ public class DetailActivity extends MvpAppCompatActivity implements DetailView {
 
     @Override
     public void loadPhoto() {
-        String titleString = getIntent().getStringExtra("title");
-        int url = getIntent().getIntExtra("url", 1);
-        photo.setImageResource(url);
-        title.setText(titleString);
+        String url = getIntent().getStringExtra(URL);
+        glideLoader.loadImage(url, photo);
     }
 
 }

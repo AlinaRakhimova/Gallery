@@ -4,8 +4,8 @@ import com.arellomobile.mvp.MvpView;
 
 public interface GalleryView extends MvpView {
 
-    void showDetailActivity(String title, int url);
+    void showDetailActivity(String url);
 
-    void showDetailActivity(String title, String url);
+    void updateRecyclerView();
 
 }

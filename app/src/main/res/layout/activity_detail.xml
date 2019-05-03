@@ -28,8 +28,7 @@
             android:layout_height="24dp"
             android:paddingStart="8dp"
             android:paddingTop="2dp"
-            android:paddingEnd="8dp"
-            android:text="@string/share_star" />
+            android:paddingEnd="8dp" />
 
         <ImageView
             android:id="@+id/content_photo"
