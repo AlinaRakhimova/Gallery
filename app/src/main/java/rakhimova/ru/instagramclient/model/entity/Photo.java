@@ -1,4 +1,4 @@
-package rakhimova.ru.instagramclient.ui.model.entity;
+package rakhimova.ru.instagramclient.model.entity;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

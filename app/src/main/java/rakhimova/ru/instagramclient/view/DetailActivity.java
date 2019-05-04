@@ -1,4 +1,4 @@
-package rakhimova.ru.instagramclient.ui.view;
+package rakhimova.ru.instagramclient.view;
 
 import android.os.Bundle;
 import android.widget.ImageView;
@@ -10,8 +10,8 @@ import com.arellomobile.mvp.presenter.InjectPresenter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import rakhimova.ru.instagramclient.R;
-import rakhimova.ru.instagramclient.ui.model.GlideLoader;
-import rakhimova.ru.instagramclient.ui.presenter.DetailPresenter;
+import rakhimova.ru.instagramclient.model.GlideLoader;
+import rakhimova.ru.instagramclient.presenter.DetailPresenter;
 
 public class DetailActivity extends MvpAppCompatActivity implements DetailView {
 

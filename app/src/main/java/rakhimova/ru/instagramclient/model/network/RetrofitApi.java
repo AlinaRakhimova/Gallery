@@ -1,11 +1,11 @@
-package rakhimova.ru.instagramclient.ui.model.network;
+package rakhimova.ru.instagramclient.model.network;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import io.reactivex.Observable;
 import io.reactivex.schedulers.Schedulers;
-import rakhimova.ru.instagramclient.ui.model.entity.Photo;
+import rakhimova.ru.instagramclient.model.entity.Photo;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;

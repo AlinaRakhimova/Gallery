@@ -1,4 +1,4 @@
-package rakhimova.ru.instagramclient.ui.view;
+package rakhimova.ru.instagramclient.view;
 
 public interface IViewHolder {
 

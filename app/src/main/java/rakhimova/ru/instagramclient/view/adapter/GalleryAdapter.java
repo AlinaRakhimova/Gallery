@@ -1,4 +1,4 @@
-package rakhimova.ru.instagramclient.ui.view.adapter;
+package rakhimova.ru.instagramclient.view.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -12,9 +12,9 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import rakhimova.ru.instagramclient.R;
-import rakhimova.ru.instagramclient.ui.model.GlideLoader;
-import rakhimova.ru.instagramclient.ui.presenter.IRecyclerGalleryPresenter;
-import rakhimova.ru.instagramclient.ui.view.IViewHolder;
+import rakhimova.ru.instagramclient.model.GlideLoader;
+import rakhimova.ru.instagramclient.presenter.IRecyclerGalleryPresenter;
+import rakhimova.ru.instagramclient.view.IViewHolder;
 
 public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHolder> {
 

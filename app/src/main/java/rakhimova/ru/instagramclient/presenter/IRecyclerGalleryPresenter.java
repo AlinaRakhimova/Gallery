@@ -1,6 +1,6 @@
-package rakhimova.ru.instagramclient.ui.presenter;
+package rakhimova.ru.instagramclient.presenter;
 
-import rakhimova.ru.instagramclient.ui.view.IViewHolder;
+import rakhimova.ru.instagramclient.view.IViewHolder;
 
 public interface IRecyclerGalleryPresenter {
 

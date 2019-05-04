@@ -1,7 +1,7 @@
-package rakhimova.ru.instagramclient.ui.model.network;
+package rakhimova.ru.instagramclient.model.network;
 
 import io.reactivex.Observable;
-import rakhimova.ru.instagramclient.ui.model.entity.Photo;
+import rakhimova.ru.instagramclient.model.entity.Photo;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 

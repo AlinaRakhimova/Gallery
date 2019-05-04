@@ -1,4 +1,4 @@
-package rakhimova.ru.instagramclient.ui.model;
+package rakhimova.ru.instagramclient.model;
 
 import android.content.Context;
 import android.widget.ImageView;
