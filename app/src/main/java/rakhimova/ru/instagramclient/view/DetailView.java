@@ -4,6 +4,6 @@ import com.arellomobile.mvp.MvpView;
 
 public interface DetailView extends MvpView {
 
-    void loadPhoto();
+    void loadPhoto(String url);
 
 }

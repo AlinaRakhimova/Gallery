@@ -15,19 +15,4 @@ public class Photo {
     @SerializedName("hits")
     public List<Hit> hits;
 
-//    private String title;
-//    private int imageUrl;
-//
-//    public Photo(String title, int imageUrl) {
-//        this.title = title;
-//        this.imageUrl = imageUrl;
-//    }
-//
-//    public String getTitle() {
-//        return title;
-//    }
-//
-//    public int getImageUrl() {
-//        return imageUrl;
-//    }
 }

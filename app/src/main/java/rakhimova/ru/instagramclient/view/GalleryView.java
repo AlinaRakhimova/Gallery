@@ -1,12 +1,14 @@
 package rakhimova.ru.instagramclient.view;
 
 import com.arellomobile.mvp.MvpView;
+import com.arellomobile.mvp.viewstate.strategy.SkipStrategy;
+import com.arellomobile.mvp.viewstate.strategy.StateStrategyType;
 
+@StateStrategyType(SkipStrategy.class)
 public interface GalleryView extends MvpView {
 
-    void showDetailActivity(String url);
+    void showDetailActivity(int id);
 
     void updateRecyclerView();
 
-    void setFirstEnter(boolean firstEnter);
 }

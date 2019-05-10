@@ -10,11 +10,11 @@ import com.google.gson.annotations.SerializedName;
 public class Hit {
 
     @PrimaryKey(autoGenerate = true)
-    public int id;
+    private int id;
 
     @Expose
     @SerializedName("webformatURL")
-    public String webformatURL;
+    private String webformatURL;
 
     @Override
     public String toString() {
@@ -24,4 +24,19 @@ public class Hit {
                 '}';
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getWebformatURL() {
+        return webformatURL;
+    }
+
+    public void setWebformatURL(String webformatURL) {
+        this.webformatURL = webformatURL;
+    }
 }

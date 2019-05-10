@@ -17,6 +17,9 @@ public interface HitDao {
     @Query("SELECT * FROM table_hits")
     Single<List<Hit>> getAll();
 
+    @Query("SELECT * FROM table_hits WHERE id = :id")
+    Single<Hit> getDetailHit(int id);
+
     @Insert
     List<Long> insertList(List<Hit> hits);
 

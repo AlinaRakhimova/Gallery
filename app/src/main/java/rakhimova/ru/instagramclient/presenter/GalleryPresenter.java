@@ -7,6 +7,8 @@ import com.arellomobile.mvp.MvpPresenter;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.SingleOnSubscribe;
@@ -14,6 +16,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import rakhimova.ru.instagramclient.App;
+import rakhimova.ru.instagramclient.UserPreferences;
 import rakhimova.ru.instagramclient.model.database.HitDao;
 import rakhimova.ru.instagramclient.model.entity.Hit;
 import rakhimova.ru.instagramclient.model.entity.Photo;
@@ -26,22 +29,28 @@ public class GalleryPresenter extends MvpPresenter<GalleryView> {
 
     private static final String TAG = "Libraries7";
 
-    private RecyclerGalleryPresenter recyclerMainPresenter = new RecyclerGalleryPresenter();
-    private RetrofitApi retrofitApi = new RetrofitApi();
-
     private List<Hit> hitList;
-    private final HitDao hitDao;
+
+    @Inject
+    RetrofitApi retrofitApi;
+    @Inject
+    HitDao hitDao;
+    @Inject
+    UserPreferences userPreferences;
+    private RecyclerGalleryPresenter recyclerGalleryPresenter;
 
     public GalleryPresenter() {
-        hitDao = App.getAppDatabase().hitDao();
+        App.getAppComponent().inject(this);
+        recyclerGalleryPresenter = new RecyclerGalleryPresenter();
     }
 
-    public RecyclerGalleryPresenter getRecyclerMainPresenter() {
-        return recyclerMainPresenter;
+    public RecyclerGalleryPresenter getRecyclerGalleryPresenter() {
+        return recyclerGalleryPresenter;
     }
 
-    public void onStart(boolean isFirstEnter) {
-        if (isFirstEnter) {
+    @Override
+    public void onFirstViewAttach() {
+        if (getFirstEnter()) {
             getPhotosFromServer();
         } else getPhotosFromDatabase();
     }
@@ -64,7 +73,7 @@ public class GalleryPresenter extends MvpPresenter<GalleryView> {
     }
 
     private void saveFirstEnter() {
-        getViewState().setFirstEnter(false);
+        setFirstEnter(false);
     }
 
     private Single<Long> insertListHits() {
@@ -83,11 +92,19 @@ public class GalleryPresenter extends MvpPresenter<GalleryView> {
                 }, throwable -> Log.e(TAG, "Ошибка загрузки из БД: " + throwable));
     }
 
-    private class RecyclerGalleryPresenter implements IRecyclerGalleryPresenter {
+    private boolean getFirstEnter() {
+        return userPreferences.isFirstEnter();
+    }
+
+    private void setFirstEnter(boolean firstEnter) {
+        userPreferences.setFirstEnter(firstEnter);
+    }
+
+    public class RecyclerGalleryPresenter implements IRecyclerGalleryPresenter {
 
         @Override
         public void bindView(IViewHolder holder) {
-            holder.setPhoto(hitList.get(holder.getPos()).webformatURL);
+            holder.setPhoto(hitList.get(holder.getPos()).getWebformatURL());
         }
 
         @Override
@@ -100,8 +117,8 @@ public class GalleryPresenter extends MvpPresenter<GalleryView> {
 
         @Override
         public void onClickDetail(IViewHolder holder) {
-            String url = hitList.get(holder.getPos()).webformatURL;
-            getViewState().showDetailActivity(url);
+            int id = hitList.get(holder.getPos()).getId();
+            getViewState().showDetailActivity(id);
         }
     }
 

@@ -1,6 +1,5 @@
 package rakhimova.ru.instagramclient.view.adapter;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,8 +8,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import rakhimova.ru.instagramclient.App;
 import rakhimova.ru.instagramclient.R;
 import rakhimova.ru.instagramclient.model.GlideLoader;
 import rakhimova.ru.instagramclient.presenter.IRecyclerGalleryPresenter;
@@ -19,11 +21,13 @@ import rakhimova.ru.instagramclient.view.IViewHolder;
 public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHolder> {
 
     private final IRecyclerGalleryPresenter presenter;
-    private GlideLoader glideLoader;
 
-    public GalleryAdapter(Context context, IRecyclerGalleryPresenter presenter) {
+    @Inject
+    GlideLoader glideLoader;
+
+    public GalleryAdapter(IRecyclerGalleryPresenter presenter) {
+        App.getAppComponent().inject(this);
         this.presenter = presenter;
-        glideLoader = new GlideLoader(context);
     }
 
     @NonNull
