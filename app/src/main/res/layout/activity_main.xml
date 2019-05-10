@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -14,18 +15,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <FrameLayout
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/list"
+        android:name="rakhimova.ru.instagramclient.view.MainActivity"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="46dp">
-
-        <fragment
-            android:id="@+id/fragment_photo_list"
-            android:name="rakhimova.ru.instagramclient.ui.view.GalleryFragment"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:layout="@layout/fragment_photo_list" />
-    </FrameLayout>
+        android:layout_height="wrap_content"
+        android:layout_marginTop="54dp"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:context=".view.MainActivity"
+        tools:listitem="@layout/fragment_photo" />
 
 </android.support.constraint.ConstraintLayout>
-
