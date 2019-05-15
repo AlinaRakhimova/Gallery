@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="rakhimova.ru.instagramclient">
+    package="ru.rakhimova.instagramclient">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -9,18 +9,18 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:name=".App"
+        android:name="ru.rakhimova.instagramclient.App"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/BlueTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
-        <activity android:name=".view.MainActivity">
+        <activity android:name="ru.rakhimova.instagramclient.view.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.DetailActivity" />
+        <activity android:name="ru.rakhimova.instagramclient.view.DetailActivity" />
     </application>
 
 </manifest>

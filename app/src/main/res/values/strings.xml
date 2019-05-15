@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">Instagram Client</string>
+    <string name="app_name" translatable="false">Gallery</string>
     <string name="theme_name">Enter theme</string>
     <string name="enter_password">Enter password</string>
     <string name="enter_login">Enter login</string>
