@@ -33,8 +33,10 @@ public class GalleryPresenter extends MvpPresenter<GalleryView> {
 
     @Inject
     RetrofitApi retrofitApi;
+
     @Inject
     HitDao hitDao;
+
     @Inject
     UserPreferences userPreferences;
     private RecyclerGalleryPresenter recyclerGalleryPresenter;
