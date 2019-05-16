@@ -57,7 +57,11 @@ public class GalleryPresenter extends MvpPresenter<GalleryView> {
         } else getPhotosFromDatabase();
     }
 
-    private void getPhotosFromServer() {
+    public List<Hit> getHitList() {
+        return hitList;
+    }
+
+    public void getPhotosFromServer() {
         Observable<Photo> single = retrofitApi.requestServer();
         Disposable disposable = single.observeOn(AndroidSchedulers.mainThread()).subscribe(photos -> {
             hitList = photos.hits;
@@ -85,7 +89,7 @@ public class GalleryPresenter extends MvpPresenter<GalleryView> {
         }).subscribeOn(Schedulers.io());
     }
 
-    private void getPhotosFromDatabase() {
+    public void getPhotosFromDatabase() {
         Disposable disposable = hitDao.getAll().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
                 .subscribe(hits -> {
                     hitList = hits;
