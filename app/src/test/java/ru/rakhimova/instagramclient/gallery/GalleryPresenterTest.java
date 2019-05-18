@@ -16,6 +16,7 @@ import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.android.plugins.RxAndroidPlugins;
 import io.reactivex.schedulers.Schedulers;
+import ru.rakhimova.instagramclient.UserPreferences;
 import ru.rakhimova.instagramclient.di.DaggerTestComponent;
 import ru.rakhimova.instagramclient.di.TestComponent;
 import ru.rakhimova.instagramclient.di.TestModule;
@@ -59,7 +60,6 @@ public class GalleryPresenterTest {
     public void getPhotosFromServer_isCorrect() {
         TestComponent component = DaggerTestComponent.builder()
                 .testModule(new TestModule() {
-
                     @Override
                     public RetrofitApi getRetrofitApi() {
                         RetrofitApi retrofitApi = super.getRetrofitApi();
@@ -67,6 +67,13 @@ public class GalleryPresenterTest {
                         photo.hits = hitList;
                         Mockito.when(retrofitApi.requestServer()).thenReturn(Observable.just(photo));
                         return retrofitApi;
+                    }
+
+                    @Override
+                    public UserPreferences getUserPreferences() {
+                        UserPreferences userPreferences = super.getUserPreferences();
+                        Mockito.when(userPreferences.isFirstEnter()).thenReturn(true);
+                        return userPreferences;
                     }
                 }).build();
 
@@ -84,8 +91,6 @@ public class GalleryPresenterTest {
                     @Override
                     public HitDao getHitDao() {
                         HitDao hitDao = super.getHitDao();
-                        Photo photo = new Photo();
-                        photo.hits = hitList;
                         Mockito.when(hitDao.getAll()).thenReturn(Single.just(hitList));
                         return hitDao;
                     }
@@ -93,8 +98,7 @@ public class GalleryPresenterTest {
 
         component.inject(presenter);
         presenter.attachView(galleryView);
-        presenter.getPhotosFromDatabase();
-        Assert.assertEquals(hitList, presenter.getHitList());
+        Mockito.verify(galleryView).updateRecyclerView();
     }
 
 }

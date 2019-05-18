@@ -24,8 +24,8 @@ public class TestModule {
     }
 
     @Provides
-    public UserPreferences getUserPreferences(Context context) {
-        return new UserPreferences(context);
+    public UserPreferences getUserPreferences() {
+        return Mockito.mock(UserPreferences.class);
     }
 
     @Provides

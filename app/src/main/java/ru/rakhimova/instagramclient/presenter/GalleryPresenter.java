@@ -15,7 +15,6 @@ import io.reactivex.SingleOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import ru.rakhimova.instagramclient.App;
 import ru.rakhimova.instagramclient.UserPreferences;
 import ru.rakhimova.instagramclient.model.database.HitDao;
 import ru.rakhimova.instagramclient.model.entity.Hit;
@@ -42,7 +41,6 @@ public class GalleryPresenter extends MvpPresenter<GalleryView> {
     private RecyclerGalleryPresenter recyclerGalleryPresenter;
 
     public GalleryPresenter() {
-        App.getAppComponent().inject(this);
         recyclerGalleryPresenter = new RecyclerGalleryPresenter();
     }
 
