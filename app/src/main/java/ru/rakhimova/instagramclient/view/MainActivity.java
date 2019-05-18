@@ -13,6 +13,7 @@ import com.arellomobile.mvp.presenter.InjectPresenter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import ru.rakhimova.instagramclient.App;
 import ru.rakhimova.instagramclient.R;
 import ru.rakhimova.instagramclient.presenter.GalleryPresenter;
 import ru.rakhimova.instagramclient.view.adapter.GalleryAdapter;
@@ -38,6 +39,7 @@ public class MainActivity extends MvpAppCompatActivity implements GalleryView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        App.getAppComponent().inject(presenter);
         initUI();
     }
 
