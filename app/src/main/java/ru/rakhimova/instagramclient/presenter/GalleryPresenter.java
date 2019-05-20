@@ -60,12 +60,14 @@ public class GalleryPresenter extends MvpPresenter<GalleryView> {
     }
 
     public void getPhotosFromServer() {
+        getViewState().showProgressBar();
         Observable<Photo> single = retrofitApi.requestServer();
         Disposable disposable = single.observeOn(AndroidSchedulers.mainThread()).subscribe(photos -> {
             hitList = photos.hits;
             getViewState().updateRecyclerView();
+            getViewState().hideProgressBar();
             saveHitsList();
-        }, throwable -> Log.e(TAG, "Ошибка получения данных с сервера"));
+        }, throwable -> Log.e(TAG, "Ошибка получения данных с сервера: " + throwable.getMessage()));
     }
 
     private void saveHitsList() {
@@ -88,10 +90,12 @@ public class GalleryPresenter extends MvpPresenter<GalleryView> {
     }
 
     public void getPhotosFromDatabase() {
+        getViewState().showProgressBar();
         Disposable disposable = hitDao.getAll().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
                 .subscribe(hits -> {
                     hitList = hits;
                     getViewState().updateRecyclerView();
+                    getViewState().hideProgressBar();
                     Log.d(TAG, "Данные загружены из БД");
                 }, throwable -> Log.e(TAG, "Ошибка загрузки из БД: " + throwable));
     }

@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SnapHelper;
 import android.support.v7.widget.Toolbar;
+import android.widget.ProgressBar;
 
 import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
@@ -29,6 +30,9 @@ public class MainActivity extends MvpAppCompatActivity implements GalleryView {
     @BindView(R.id.list)
     RecyclerView photoRecycler;
 
+    @BindView(R.id.progress_bar)
+    ProgressBar progressBar;
+
     @InjectPresenter
     GalleryPresenter presenter;
 
@@ -44,7 +48,6 @@ public class MainActivity extends MvpAppCompatActivity implements GalleryView {
     }
 
     private void initUI() {
-        setSupportActionBar(toolbar);
         showPhotoRecycler();
         SnapHelper snapHelper = new LinearSnapHelper();
         snapHelper.attachToRecyclerView(photoRecycler);
@@ -66,6 +69,16 @@ public class MainActivity extends MvpAppCompatActivity implements GalleryView {
     @Override
     public void updateRecyclerView() {
         galleryAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void showProgressBar() {
+        progressBar.setVisibility(ProgressBar.VISIBLE);
+    }
+
+    @Override
+    public void hideProgressBar() {
+        progressBar.setVisibility(ProgressBar.INVISIBLE);
     }
 
 }
