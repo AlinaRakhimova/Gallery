@@ -21,6 +21,11 @@
             </intent-filter>
         </activity>
         <activity android:name="ru.rakhimova.instagramclient.view.DetailActivity" />
+
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="eed622bdc54564e6b5ed58acad5997ff7efb8082" />
     </application>
+
 
 </manifest>

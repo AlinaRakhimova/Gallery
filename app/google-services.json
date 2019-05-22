@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "213295271211",
+    "firebase_url": "https://instagramclient-48b58.firebaseio.com",
+    "project_id": "instagramclient-48b58",
+    "storage_bucket": "instagramclient-48b58.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:213295271211:android:c116699acc528e6c",
+        "android_client_info": {
+          "package_name": "ru.rakhimova.instagramclient"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "213295271211-6a1jgi6uqgtrifj15tvbjam4tl4ov9uv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAa8cY4ifJzp4j2u7y6hCo6Dnq2jV6osj4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "213295271211-6a1jgi6uqgtrifj15tvbjam4tl4ov9uv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

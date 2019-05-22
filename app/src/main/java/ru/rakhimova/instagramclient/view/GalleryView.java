@@ -11,4 +11,7 @@ public interface GalleryView extends MvpView {
 
     void updateRecyclerView();
 
+    void showProgressBar();
+
+    void hideProgressBar();
 }
