@@ -1,5 +1,6 @@
 package ru.rakhimova.instagramclient.view;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -7,22 +8,28 @@ import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SnapHelper;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.widget.ProgressBar;
 
 import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import ru.rakhimova.instagramclient.App;
 import ru.rakhimova.instagramclient.R;
+import ru.rakhimova.instagramclient.di.App;
 import ru.rakhimova.instagramclient.presenter.GalleryPresenter;
 import ru.rakhimova.instagramclient.view.adapter.GalleryAdapter;
 
-public class MainActivity extends MvpAppCompatActivity implements GalleryView {
+public class GalleryActivity extends MvpAppCompatActivity implements GalleryView {
 
     public static final int SPAN_COUNT = 2;
     public static final String ID = "id";
+
+    @Inject
+    Context context;
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -35,7 +42,6 @@ public class MainActivity extends MvpAppCompatActivity implements GalleryView {
 
     @InjectPresenter
     GalleryPresenter presenter;
-
     private GalleryAdapter galleryAdapter;
 
     @Override
@@ -79,6 +85,12 @@ public class MainActivity extends MvpAppCompatActivity implements GalleryView {
     @Override
     public void hideProgressBar() {
         progressBar.setVisibility(ProgressBar.INVISIBLE);
+    }
+
+    @Override
+    public void showToast(String message) {
+//        Toast.makeText(context, message, Toast.LENGTH_SHORT).show(); //FIXME Реализовать отображение toast
+        Log.d("Libraries7", message);
     }
 
 }

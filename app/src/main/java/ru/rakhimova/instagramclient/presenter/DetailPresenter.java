@@ -1,7 +1,5 @@
 package ru.rakhimova.instagramclient.presenter;
 
-import android.util.Log;
-
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 
@@ -10,24 +8,16 @@ import javax.inject.Inject;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import ru.rakhimova.instagramclient.App;
-import ru.rakhimova.instagramclient.model.database.HitDao;
+import ru.rakhimova.instagramclient.model.database.RoomHelper;
 import ru.rakhimova.instagramclient.view.DetailView;
 
 @InjectViewState
 public class DetailPresenter extends MvpPresenter<DetailView> {
 
-    private static final String TAG = "Libraries7";
+    private int id;
 
     @Inject
-    HitDao hitDao;
-
-    private int id;
-    private String url;
-
-    public DetailPresenter() {
-        App.getAppComponent().inject(this);
-    }
+    RoomHelper roomHelper;
 
     public void onStart(int id) {
         this.id = id;
@@ -35,11 +25,12 @@ public class DetailPresenter extends MvpPresenter<DetailView> {
     }
 
     private void getDetailHitFromDatabase() {
-        Disposable disposable = hitDao.getDetailHit(id).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+        Disposable disposable = roomHelper.getHit(id).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
                 .subscribe(hit -> {
-                    url = hit.getWebformatURL();
-                    getViewState().loadPhoto(url);
-                    Log.d(TAG, "Данные загружены из БД");
-                }, throwable -> Log.e(TAG, "Ошибка загрузки из БД: " + throwable));
+                    String url = hit.getWebformatURL();
+                    String title = hit.getTitle();
+                    getViewState().loadPhoto(title, url);
+                    getViewState().showToast("Данные загружены из БД");
+                }, throwable -> getViewState().showToast("Ошибка загрузки из БД: " + throwable.getMessage()));
     }
 }

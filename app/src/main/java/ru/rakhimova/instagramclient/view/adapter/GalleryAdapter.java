@@ -12,8 +12,8 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import ru.rakhimova.instagramclient.App;
 import ru.rakhimova.instagramclient.R;
+import ru.rakhimova.instagramclient.di.App;
 import ru.rakhimova.instagramclient.model.GlideLoader;
 import ru.rakhimova.instagramclient.presenter.IRecyclerGalleryPresenter;
 import ru.rakhimova.instagramclient.view.IViewHolder;
@@ -66,7 +66,8 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
         }
 
         @Override
-        public void setPhoto(String url) {
+        public void setPhoto(String title, String url) {
+            titleView.setText(title);
             glideLoader.loadImage(url, photoView);
         }
 

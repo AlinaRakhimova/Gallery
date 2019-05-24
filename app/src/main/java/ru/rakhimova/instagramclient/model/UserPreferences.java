@@ -1,4 +1,4 @@
-package ru.rakhimova.instagramclient;
+package ru.rakhimova.instagramclient.model;
 
 import android.app.Activity;
 import android.content.Context;

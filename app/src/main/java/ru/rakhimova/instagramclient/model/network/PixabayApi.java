@@ -4,20 +4,22 @@ import javax.inject.Inject;
 
 import io.reactivex.Observable;
 import io.reactivex.schedulers.Schedulers;
-import ru.rakhimova.instagramclient.App;
+import ru.rakhimova.instagramclient.di.App;
 import ru.rakhimova.instagramclient.model.entity.Photo;
 
-public class RetrofitApi {
+public class PixabayApi {
+
+    private static final String KEY_PIXABAY = "9250926-552b631cddef606bad3e807d2";
 
     @Inject
-    RetrofitService api;
+    PixabayService api;
 
-    public RetrofitApi() {
+    public PixabayApi() {
         App.getAppComponent().inject(this);
     }
 
     public Observable<Photo> requestServer() {
-        return api.getPhoto("9250926-552b631cddef606bad3e807d2").subscribeOn(Schedulers.io());
+        return api.getPhoto(KEY_PIXABAY).subscribeOn(Schedulers.io());
     }
 
 }

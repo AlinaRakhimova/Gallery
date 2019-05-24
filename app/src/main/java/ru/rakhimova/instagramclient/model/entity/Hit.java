@@ -16,6 +16,10 @@ public class Hit {
     @SerializedName("webformatURL")
     private String webformatURL;
 
+    @Expose
+    @SerializedName("tags")
+    private String title;
+
     @Override
     public String toString() {
         return "Url{" +
@@ -38,5 +42,13 @@ public class Hit {
 
     public void setWebformatURL(String webformatURL) {
         this.webformatURL = webformatURL;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 }

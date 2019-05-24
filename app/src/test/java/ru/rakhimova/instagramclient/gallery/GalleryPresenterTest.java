@@ -1,6 +1,5 @@
 package ru.rakhimova.instagramclient.gallery;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -16,14 +15,14 @@ import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.android.plugins.RxAndroidPlugins;
 import io.reactivex.schedulers.Schedulers;
-import ru.rakhimova.instagramclient.UserPreferences;
 import ru.rakhimova.instagramclient.di.DaggerTestComponent;
 import ru.rakhimova.instagramclient.di.TestComponent;
 import ru.rakhimova.instagramclient.di.TestModule;
+import ru.rakhimova.instagramclient.model.UserPreferences;
 import ru.rakhimova.instagramclient.model.database.HitDao;
 import ru.rakhimova.instagramclient.model.entity.Hit;
 import ru.rakhimova.instagramclient.model.entity.Photo;
-import ru.rakhimova.instagramclient.model.network.RetrofitApi;
+import ru.rakhimova.instagramclient.model.network.PixabayApi;
 import ru.rakhimova.instagramclient.presenter.GalleryPresenter;
 import ru.rakhimova.instagramclient.view.GalleryView;
 
@@ -61,12 +60,12 @@ public class GalleryPresenterTest {
         TestComponent component = DaggerTestComponent.builder()
                 .testModule(new TestModule() {
                     @Override
-                    public RetrofitApi getRetrofitApi() {
-                        RetrofitApi retrofitApi = super.getRetrofitApi();
+                    public PixabayApi getRetrofitApi() {
+                        PixabayApi pixabayApi = super.getRetrofitApi();
                         Photo photo = new Photo();
                         photo.hits = hitList;
-                        Mockito.when(retrofitApi.requestServer()).thenReturn(Observable.just(photo));
-                        return retrofitApi;
+                        Mockito.when(pixabayApi.requestServer()).thenReturn(Observable.just(photo));
+                        return pixabayApi;
                     }
 
                     @Override
@@ -80,7 +79,7 @@ public class GalleryPresenterTest {
         component.inject(presenter);
         presenter.attachView(galleryView);
         presenter.getPhotosFromServer();
-        Assert.assertEquals(hitList, presenter.getHitList());
+        Mockito.verify(presenter).ifRequestSuccess();
     }
 
     @Test
@@ -98,7 +97,7 @@ public class GalleryPresenterTest {
 
         component.inject(presenter);
         presenter.attachView(galleryView);
-        Mockito.verify(galleryView).updateRecyclerView();
+        Mockito.verify(presenter).ifRequestSuccess();
     }
 
 }

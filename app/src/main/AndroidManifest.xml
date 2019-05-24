@@ -9,12 +9,12 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:name="ru.rakhimova.instagramclient.App"
+        android:name="ru.rakhimova.instagramclient.di.App"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/BlueTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
-        <activity android:name="ru.rakhimova.instagramclient.view.MainActivity">
+        <activity android:name="ru.rakhimova.instagramclient.view.GalleryActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
