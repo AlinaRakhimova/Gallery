@@ -16,7 +16,7 @@
         android:name="rakhimova.ru.instagramclient.view.MainActivity"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".view.MainActivity"
+        tools:context=".view.GalleryActivity"
         tools:listitem="@layout/fragment_photo" />
 
     <ProgressBar

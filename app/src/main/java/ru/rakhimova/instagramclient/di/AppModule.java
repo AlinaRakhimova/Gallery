@@ -11,12 +11,13 @@ import dagger.Provides;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
-import ru.rakhimova.instagramclient.UserPreferences;
 import ru.rakhimova.instagramclient.model.GlideLoader;
+import ru.rakhimova.instagramclient.model.UserPreferences;
 import ru.rakhimova.instagramclient.model.database.AppDatabase;
 import ru.rakhimova.instagramclient.model.database.HitDao;
-import ru.rakhimova.instagramclient.model.network.RetrofitApi;
-import ru.rakhimova.instagramclient.model.network.RetrofitService;
+import ru.rakhimova.instagramclient.model.database.RoomHelper;
+import ru.rakhimova.instagramclient.model.network.PixabayApi;
+import ru.rakhimova.instagramclient.model.network.PixabayService;
 
 @Module
 public
@@ -31,8 +32,18 @@ class AppModule {
     }
 
     @Provides
-    RetrofitApi getRetrofitApi() {
-        return new RetrofitApi();
+    Context getContext() {
+        return context;
+    }
+
+    @Provides
+    PixabayApi getPixabayApi() {
+        return new PixabayApi();
+    }
+
+    @Provides
+    RoomHelper getRoomHelper() {
+        return new RoomHelper();
     }
 
     @Provides
@@ -69,14 +80,18 @@ class AppModule {
     }
 
     @Provides
-    RetrofitService getRetrofitService(GsonConverterFactory gsonConverterFactory) {
-        return new Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .addConverterFactory(gsonConverterFactory)
-                .build()
-                .create(RetrofitService.class);
+    RxJava2CallAdapterFactory getRxJava2CallAdapterFactory() {
+        return RxJava2CallAdapterFactory.create();
     }
 
+    @Provides
+    PixabayService getRetrofitService(GsonConverterFactory gsonConverterFactory, RxJava2CallAdapterFactory rxJava2CallAdapterFactory) {
+        return new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addCallAdapterFactory(rxJava2CallAdapterFactory)
+                .addConverterFactory(gsonConverterFactory)
+                .build()
+                .create(PixabayService.class);
+    }
 
 }

@@ -1,7 +1,5 @@
 package ru.rakhimova.instagramclient.presenter;
 
-import android.util.Log;
-
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 
@@ -15,30 +13,28 @@ import io.reactivex.SingleOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import ru.rakhimova.instagramclient.UserPreferences;
+import ru.rakhimova.instagramclient.model.UserPreferences;
 import ru.rakhimova.instagramclient.model.database.HitDao;
 import ru.rakhimova.instagramclient.model.entity.Hit;
 import ru.rakhimova.instagramclient.model.entity.Photo;
-import ru.rakhimova.instagramclient.model.network.RetrofitApi;
+import ru.rakhimova.instagramclient.model.network.PixabayApi;
 import ru.rakhimova.instagramclient.view.GalleryView;
 import ru.rakhimova.instagramclient.view.IViewHolder;
 
 @InjectViewState
 public class GalleryPresenter extends MvpPresenter<GalleryView> {
 
-    private static final String TAG = "Libraries7";
-
     private List<Hit> hitList;
 
     @Inject
-    RetrofitApi retrofitApi;
+    PixabayApi pixabayApi;
+    private RecyclerGalleryPresenter recyclerGalleryPresenter;
 
     @Inject
     HitDao hitDao;
 
     @Inject
     UserPreferences userPreferences;
-    private RecyclerGalleryPresenter recyclerGalleryPresenter;
 
     public GalleryPresenter() {
         recyclerGalleryPresenter = new RecyclerGalleryPresenter();
@@ -61,21 +57,25 @@ public class GalleryPresenter extends MvpPresenter<GalleryView> {
 
     public void getPhotosFromServer() {
         getViewState().showProgressBar();
-        Observable<Photo> single = retrofitApi.requestServer();
+        Observable<Photo> single = pixabayApi.requestServer();
         Disposable disposable = single.observeOn(AndroidSchedulers.mainThread()).subscribe(photos -> {
             hitList = photos.hits;
-            getViewState().updateRecyclerView();
-            getViewState().hideProgressBar();
+            ifRequestSuccess();
             saveHitsList();
-        }, throwable -> Log.e(TAG, "Ошибка получения данных с сервера: " + throwable.getMessage()));
+        }, throwable -> getViewState().showToast("Ошибка получения данных с сервера: " + throwable.getMessage()));
+    }
+
+    public void ifRequestSuccess() {
+        getViewState().updateRecyclerView();
+        getViewState().hideProgressBar();
     }
 
     private void saveHitsList() {
         Disposable disposable = insertListHits().observeOn(AndroidSchedulers.mainThread())
                 .subscribe(id -> {
-                    Log.d(TAG, "Фотографии сохранены в БД: " + id);
+                    getViewState().showToast("Фотографии сохранены в БД");
                     saveFirstEnter();
-                }, throwable -> Log.e(TAG, "Ошибка сохранения в БД: " + throwable));
+                }, throwable -> getViewState().showToast("Ошибка сохранения в БД: " + throwable));
     }
 
     private void saveFirstEnter() {
@@ -94,10 +94,9 @@ public class GalleryPresenter extends MvpPresenter<GalleryView> {
         Disposable disposable = hitDao.getAll().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
                 .subscribe(hits -> {
                     hitList = hits;
-                    getViewState().updateRecyclerView();
-                    getViewState().hideProgressBar();
-                    Log.d(TAG, "Данные загружены из БД");
-                }, throwable -> Log.e(TAG, "Ошибка загрузки из БД: " + throwable));
+                    ifRequestSuccess();
+                    getViewState().showToast("Данные загружены из БД");
+                }, throwable -> getViewState().showToast("Ошибка загрузки из БД: " + throwable));
     }
 
     private boolean getFirstEnter() {
@@ -112,7 +111,8 @@ public class GalleryPresenter extends MvpPresenter<GalleryView> {
 
         @Override
         public void bindView(IViewHolder holder) {
-            holder.setPhoto(hitList.get(holder.getPos()).getWebformatURL());
+            Hit hit = hitList.get(holder.getPos());
+            holder.setPhoto(hit.getTitle(), hit.getWebformatURL());
         }
 
         @Override
