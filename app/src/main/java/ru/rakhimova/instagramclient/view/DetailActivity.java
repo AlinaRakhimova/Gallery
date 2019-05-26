@@ -3,6 +3,8 @@ package ru.rakhimova.instagramclient.view;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,6 +15,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import ru.rakhimova.instagramclient.R;
 import ru.rakhimova.instagramclient.di.App;
 import ru.rakhimova.instagramclient.model.GlideLoader;
@@ -27,6 +30,12 @@ public class DetailActivity extends MvpAppCompatActivity implements DetailView {
 
     @BindView(R.id.title)
     TextView titleTV;
+
+    @BindView(R.id.favorite_border)
+    ImageButton favoriteBorder;
+
+    @BindView(R.id.favorite)
+    ImageButton favorite;
 
     @InjectPresenter
     DetailPresenter presenter;
@@ -51,6 +60,27 @@ public class DetailActivity extends MvpAppCompatActivity implements DetailView {
         super.onStart();
         int id = getIntent().getIntExtra(ID, 0);
         presenter.onStart(id);
+    }
+
+    @OnClick(R.id.favorite_border)
+    void onClickNoFavorite() {
+        presenter.onClickNoFavorite();
+    }
+
+    @OnClick(R.id.favorite)
+    void onClickFavorite() {
+        presenter.onClickFavorite();
+    }
+
+    @Override
+    public void setFavoriteImage(boolean isFavorite) {
+        if (isFavorite) {
+            favoriteBorder.setVisibility(View.INVISIBLE);
+            favorite.setVisibility(View.VISIBLE);
+        } else {
+            favorite.setVisibility(View.INVISIBLE);
+            favoriteBorder.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override

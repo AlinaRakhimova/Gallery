@@ -43,49 +43,33 @@
             card_view:layout_constraintStart_toStartOf="parent"
             card_view:layout_constraintTop_toBottomOf="@+id/title" />
 
-        <ImageButton
-            android:id="@+id/chip_star"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            android:background="@drawable/ic_star_border_black_24dp"
-            android:paddingStart="4dp"
-            android:paddingEnd="4dp"
-            card_view:layout_constraintBottom_toBottomOf="parent"
-            card_view:layout_constraintEnd_toEndOf="@+id/content_photo" />
-
-        <ImageButton
-            android:id="@+id/chip_favorite_border"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentBottom="true"
-            android:layout_margin="4dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginBottom="8dp"
-            android:background="@drawable/ic_favorite_border_black_24dp"
-            android:paddingStart="4dp"
-            android:paddingEnd="4dp"
-            card_view:layout_constraintBottom_toBottomOf="@+id/content_photo"
-            card_view:layout_constraintStart_toStartOf="@+id/content_photo" />
-
-        <ImageButton
-            android:id="@+id/chip_favorite"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentBottom="true"
-            android:layout_margin="4dp"
-            android:background="@drawable/ic_favorite_black_24dp"
-            android:paddingStart="4dp"
-            android:paddingEnd="4dp"
-            android:visibility="gone"
-            card_view:layout_constraintBottom_toBottomOf="@+id/content_photo"
-            card_view:layout_constraintStart_toStartOf="@+id/content_photo" />
-
     </android.support.constraint.ConstraintLayout>
+
+    <ImageButton
+        android:id="@+id/favorite_border"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom|start"
+        android:layout_margin="4dp"
+        android:background="@drawable/ic_favorite_border_black_24dp"
+        android:contentDescription="@string/favorite"
+        android:paddingStart="4dp"
+        android:paddingEnd="4dp" />
+
+    <ImageButton
+        android:id="@+id/favorite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom|start"
+        android:layout_margin="4dp"
+        android:background="@drawable/ic_favorite_black_24dp"
+        android:contentDescription="@string/favorite"
+        android:paddingStart="4dp"
+        android:paddingEnd="4dp"
+        android:visibility="invisible" />
 
 </android.support.design.card.MaterialCardView>

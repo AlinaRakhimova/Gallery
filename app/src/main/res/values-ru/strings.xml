@@ -8,4 +8,6 @@
     <string name="theme_name">Введите название темы</string>
     <string name="message">Необходимо ввести логин и пароль</string>
     <string name="favorite">Избранное</string>
+    <string name="bottom_text">Открыть избранные фотографии</string>
+    <string name="app_name" translatable="false">Галерея</string>
 </resources>

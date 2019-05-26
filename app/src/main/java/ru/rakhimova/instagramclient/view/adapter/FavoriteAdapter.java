@@ -16,17 +16,17 @@ import butterknife.ButterKnife;
 import ru.rakhimova.instagramclient.R;
 import ru.rakhimova.instagramclient.di.App;
 import ru.rakhimova.instagramclient.model.GlideLoader;
-import ru.rakhimova.instagramclient.presenter.IRecyclerGalleryPresenter;
+import ru.rakhimova.instagramclient.presenter.IRecyclerFavoritePresenter;
 import ru.rakhimova.instagramclient.view.IViewHolder;
 
-public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHolder> {
+public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHolder> {
 
-    private final IRecyclerGalleryPresenter presenter;
+    private final IRecyclerFavoritePresenter presenter;
 
     @Inject
     GlideLoader glideLoader;
 
-    public GalleryAdapter(IRecyclerGalleryPresenter presenter) {
+    public FavoriteAdapter(IRecyclerFavoritePresenter presenter) {
         App.getAppComponent().inject(this);
         this.presenter = presenter;
     }
@@ -45,7 +45,6 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
         presenter.bindView(holder);
         holder.photoView.setOnClickListener(v -> presenter.onClickDetail(holder));
         holder.favorite.setOnClickListener(v -> presenter.onClickFavorite(holder));
-        holder.favoriteBorder.setOnClickListener(v -> presenter.onClickNoFavorite(holder));
     }
 
     @Override
@@ -72,6 +71,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
         private ViewHolder(final View view) {
             super(view);
             ButterKnife.bind(this, view);
+            setFavoriteImage(true);
         }
 
         @Override
@@ -88,13 +88,8 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
         @Override
         public void setFavoriteImage(boolean isFavorite) {
             if (isFavorite) {
-                presenter.addPhotoToFavorite(this);
                 favoriteBorder.setVisibility(View.INVISIBLE);
                 favorite.setVisibility(View.VISIBLE);
-            } else {
-                presenter.deletePhotoFromFavorite(this);
-                favorite.setVisibility(View.INVISIBLE);
-                favoriteBorder.setVisibility(View.VISIBLE);
             }
         }
     }

@@ -21,6 +21,7 @@
             </intent-filter>
         </activity>
         <activity android:name="ru.rakhimova.instagramclient.view.DetailActivity" />
+        <activity android:name=".view.FavoriteActivity" />
     </application>
 
 </manifest>

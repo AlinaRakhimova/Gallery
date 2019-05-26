@@ -14,6 +14,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import ru.rakhimova.instagramclient.model.GlideLoader;
 import ru.rakhimova.instagramclient.model.UserPreferences;
 import ru.rakhimova.instagramclient.model.database.AppDatabase;
+import ru.rakhimova.instagramclient.model.database.FavoriteHitDao;
 import ru.rakhimova.instagramclient.model.database.HitDao;
 import ru.rakhimova.instagramclient.model.database.RoomHelper;
 import ru.rakhimova.instagramclient.model.network.PixabayApi;
@@ -50,6 +51,12 @@ class AppModule {
     HitDao getHitDao() {
         return getAppDatabase().hitDao();
     }
+
+    @Provides
+    FavoriteHitDao getFavoriteHitDao() {
+        return getAppDatabase().favoriteHitDao();
+    }
+
 
     @Provides
     UserPreferences getUserPreferences() {

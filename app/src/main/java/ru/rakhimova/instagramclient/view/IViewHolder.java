@@ -6,4 +6,6 @@ public interface IViewHolder {
 
     int getPos();
 
+    void setFavoriteImage(boolean isFavorite);
+
 }
