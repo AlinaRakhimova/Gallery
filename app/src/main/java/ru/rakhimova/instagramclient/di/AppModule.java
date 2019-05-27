@@ -20,12 +20,13 @@ import ru.rakhimova.instagramclient.model.database.RoomHelper;
 import ru.rakhimova.instagramclient.model.network.PixabayApi;
 import ru.rakhimova.instagramclient.model.network.PixabayService;
 
+import static ru.rakhimova.instagramclient.model.Constants.BASE_URL;
+import static ru.rakhimova.instagramclient.model.Constants.DATABASE_NAME;
+
 @Module
 public
 class AppModule {
 
-    private static final String BASE_URL = "https://pixabay.com";
-    private static final String DATABASE_NAME = "photo_database";
     private Context context;
 
     public AppModule(Context context) {

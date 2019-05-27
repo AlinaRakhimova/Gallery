@@ -32,16 +32,7 @@ public class DetailPresenter extends MvpPresenter<DetailView> {
                     String url = hit.getWebformatURL();
                     String title = hit.getTitle();
                     getViewState().loadPhoto(title, url);
-                    getViewState().showToast("Данные загружены из БД");
                 }, throwable -> getViewState().showToast("Ошибка загрузки из БД: " + throwable.getMessage()));
-    }
-
-    public void onClickFavorite() {
-        getViewState().setFavoriteImage(false);
-    }
-
-    public void onClickNoFavorite() {
-        getViewState().setFavoriteImage(true);
     }
 
 }

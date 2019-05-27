@@ -16,4 +16,5 @@ public interface GalleryView extends MvpView {
     void hideProgressBar();
 
     void showToast(String message);
+
 }

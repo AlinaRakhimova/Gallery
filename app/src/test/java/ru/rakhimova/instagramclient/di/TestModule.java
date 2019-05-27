@@ -8,6 +8,7 @@ import dagger.Module;
 import dagger.Provides;
 import ru.rakhimova.instagramclient.model.UserPreferences;
 import ru.rakhimova.instagramclient.model.database.HitDao;
+import ru.rakhimova.instagramclient.model.database.RoomHelper;
 import ru.rakhimova.instagramclient.model.network.PixabayApi;
 
 @Module
@@ -36,6 +37,11 @@ public class TestModule {
     @Provides
     public AppComponent getAppComponent() {
         return Mockito.mock(AppComponent.class);
+    }
+
+    @Provides
+    public RoomHelper getRoomHelper() {
+        return Mockito.mock(RoomHelper.class);
     }
 
 }

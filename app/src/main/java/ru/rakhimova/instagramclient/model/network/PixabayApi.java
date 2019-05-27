@@ -7,9 +7,9 @@ import io.reactivex.schedulers.Schedulers;
 import ru.rakhimova.instagramclient.di.App;
 import ru.rakhimova.instagramclient.model.entity.Photo;
 
-public class PixabayApi {
+import static ru.rakhimova.instagramclient.model.Constants.KEY_PIXABAY;
 
-    private static final String KEY_PIXABAY = "9250926-552b631cddef606bad3e807d2";
+public class PixabayApi {
 
     @Inject
     PixabayService api;

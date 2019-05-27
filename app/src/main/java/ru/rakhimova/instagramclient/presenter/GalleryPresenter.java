@@ -27,10 +27,10 @@ import ru.rakhimova.instagramclient.view.IViewHolder;
 public class GalleryPresenter extends MvpPresenter<GalleryView> {
 
     private List<Hit> hitList;
+    private RecyclerGalleryPresenter recyclerGalleryPresenter;
 
     @Inject
     PixabayApi pixabayApi;
-    private RecyclerGalleryPresenter recyclerGalleryPresenter;
 
     @Inject
     UserPreferences userPreferences;
@@ -60,7 +60,7 @@ public class GalleryPresenter extends MvpPresenter<GalleryView> {
         single.observeOn(AndroidSchedulers.mainThread()).subscribe(photos -> {
             hitList = photos.hits;
             ifRequestSuccess();
-            saveHitsList();
+            saveHitsListToDatabase();
         }, throwable -> getViewState().showToast("Ошибка получения данных с сервера: " + throwable.getMessage()));
     }
 
@@ -70,16 +70,9 @@ public class GalleryPresenter extends MvpPresenter<GalleryView> {
     }
 
     @SuppressLint("CheckResult")
-    private void saveHitsList() {
+    private void saveHitsListToDatabase() {
         saveHitListObservable().observeOn(AndroidSchedulers.mainThread())
-                .subscribe(id -> {
-                    getViewState().showToast("Фотографии сохранены в БД");
-                    saveFirstEnter();
-                }, throwable -> getViewState().showToast("Ошибка сохранения в БД: " + throwable));
-    }
-
-    private void saveFirstEnter() {
-        setFirstEnter(false);
+                .subscribe(id -> setFirstEnter(false), throwable -> getViewState().showToast("Ошибка сохранения в БД: " + throwable));
     }
 
     private Single<Long> saveHitListObservable() {
@@ -96,7 +89,6 @@ public class GalleryPresenter extends MvpPresenter<GalleryView> {
                 .subscribe(hits -> {
                     hitList = hits;
                     ifRequestSuccess();
-                    getViewState().showToast("Данные загружены из БД");
                 }, throwable -> getViewState().showToast("Ошибка загрузки из БД: " + throwable));
     }
 
@@ -140,7 +132,6 @@ public class GalleryPresenter extends MvpPresenter<GalleryView> {
 
     public class RecyclerGalleryPresenter implements IRecyclerGalleryPresenter {
 
-
         @Override
         public void bindView(IViewHolder holder) {
             Hit hit = hitList.get(holder.getPos());
@@ -158,20 +149,12 @@ public class GalleryPresenter extends MvpPresenter<GalleryView> {
         @Override
         public void onClickNoFavorite(IViewHolder holder) {
             holder.setFavoriteImage(true);
+            insertFavoritePhotoToDatabase(hitList.get(holder.getPos()).getId());
         }
 
         @Override
         public void onClickFavorite(IViewHolder holder) {
             holder.setFavoriteImage(false);
-        }
-
-        @Override
-        public void addPhotoToFavorite(IViewHolder holder) {
-            insertFavoritePhotoToDatabase(hitList.get(holder.getPos()).getId());
-        }
-
-        @Override
-        public void deletePhotoFromFavorite(IViewHolder holder) {
             deleteFavoritePhotoFromDatabase(hitList.get(holder.getPos()).getId());
         }
 

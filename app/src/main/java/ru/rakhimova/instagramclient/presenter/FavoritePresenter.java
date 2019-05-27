@@ -21,10 +21,11 @@ import ru.rakhimova.instagramclient.view.IViewHolder;
 @InjectViewState
 public class FavoritePresenter extends MvpPresenter<FavoriteView> {
 
-    @Inject
-    RoomHelper roomHelper;
     private List<Hit> hitList;
     private RecyclerFavoritePresenter recyclerFavoritePresenter;
+
+    @Inject
+    RoomHelper roomHelper;
 
     public FavoritePresenter() {
         recyclerFavoritePresenter = new RecyclerFavoritePresenter();
@@ -46,7 +47,6 @@ public class FavoritePresenter extends MvpPresenter<FavoriteView> {
                 .subscribe(hits -> {
                     hitList = hits;
                     ifRequestSuccess();
-                    getViewState().showToast("Данные загружены из БД");
                 }, throwable -> getViewState().showToast("Ошибка загрузки из БД: " + throwable));
     }
 
@@ -90,18 +90,14 @@ public class FavoritePresenter extends MvpPresenter<FavoriteView> {
 
         @Override
         public void onClickFavorite(IViewHolder holder) {
-            deletePhotoFromFavorite(holder);
+            deleteFavoritePhotoFromDatabase(hitList.get(holder.getPos()).getId());
+            hitList.remove(holder.getPos());
         }
 
         @Override
         public void onClickDetail(IViewHolder holder) {
             int id = hitList.get(holder.getPos()).getId();
             getViewState().showDetailActivity(id);
-        }
-
-        private void deletePhotoFromFavorite(IViewHolder holder) {
-            deleteFavoritePhotoFromDatabase(hitList.get(holder.getPos()).getId());
-            hitList.remove(holder.getPos());
         }
     }
 

@@ -8,8 +8,8 @@ import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SnapHelper;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
@@ -24,9 +24,9 @@ import ru.rakhimova.instagramclient.di.App;
 import ru.rakhimova.instagramclient.presenter.GalleryPresenter;
 import ru.rakhimova.instagramclient.view.adapter.GalleryAdapter;
 
-public class GalleryActivity extends MvpAppCompatActivity implements GalleryView {
+import static ru.rakhimova.instagramclient.model.Constants.ID;
 
-    public static final String ID = "id";
+public class GalleryActivity extends MvpAppCompatActivity implements GalleryView {
 
     private GalleryAdapter galleryAdapter;
 
@@ -96,8 +96,7 @@ public class GalleryActivity extends MvpAppCompatActivity implements GalleryView
 
     @Override
     public void showToast(String message) {
-        //  Toast.makeText(context, message, Toast.LENGTH_SHORT).show(); //FIXME Ошибка при отображении toast
-        Log.d("Libraries7", message);
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
 }

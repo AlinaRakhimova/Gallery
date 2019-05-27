@@ -12,10 +12,6 @@ public interface IRecyclerGalleryPresenter {
 
     void onClickFavorite(IViewHolder holder);
 
-    void addPhotoToFavorite(IViewHolder holder);
-
-    void deletePhotoFromFavorite(IViewHolder holder);
-
     void onClickDetail(IViewHolder iViewHolder);
 
 }

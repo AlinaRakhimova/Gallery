@@ -88,11 +88,9 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
         @Override
         public void setFavoriteImage(boolean isFavorite) {
             if (isFavorite) {
-                presenter.addPhotoToFavorite(this);
                 favoriteBorder.setVisibility(View.INVISIBLE);
                 favorite.setVisibility(View.VISIBLE);
             } else {
-                presenter.deletePhotoFromFavorite(this);
                 favorite.setVisibility(View.INVISIBLE);
                 favoriteBorder.setVisibility(View.VISIBLE);
             }
