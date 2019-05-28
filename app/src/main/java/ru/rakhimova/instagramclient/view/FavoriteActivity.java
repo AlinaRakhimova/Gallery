@@ -3,6 +3,7 @@ package ru.rakhimova.instagramclient.view;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.RecyclerView;
@@ -18,17 +19,14 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import ru.rakhimova.instagramclient.R;
 import ru.rakhimova.instagramclient.di.App;
-import ru.rakhimova.instagramclient.presenter.GalleryPresenter;
-import ru.rakhimova.instagramclient.view.adapter.GalleryAdapter;
+import ru.rakhimova.instagramclient.presenter.FavoritePresenter;
+import ru.rakhimova.instagramclient.view.adapter.FavoriteAdapter;
 
 import static ru.rakhimova.instagramclient.model.Constants.ID;
 
-public class GalleryActivity extends MvpAppCompatActivity implements GalleryView {
-
-    private GalleryAdapter galleryAdapter;
+public class FavoriteActivity extends MvpAppCompatActivity implements FavoriteView {
 
     @Inject
     Context context;
@@ -42,8 +40,13 @@ public class GalleryActivity extends MvpAppCompatActivity implements GalleryView
     @BindView(R.id.progress_bar)
     ProgressBar progressBar;
 
+    @BindView(R.id.fab_favorite)
+    FloatingActionButton favorite;
+
     @InjectPresenter
-    GalleryPresenter presenter;
+    FavoritePresenter presenter;
+
+    private FavoriteAdapter favoriteAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,12 +61,13 @@ public class GalleryActivity extends MvpAppCompatActivity implements GalleryView
         showPhotoRecycler();
         SnapHelper snapHelper = new LinearSnapHelper();
         snapHelper.attachToRecyclerView(photoRecycler);
+        favorite.hide();
     }
 
     private void showPhotoRecycler() {
         photoRecycler.setLayoutManager(new LinearLayoutManager(this));
-        galleryAdapter = new GalleryAdapter(presenter.getRecyclerGalleryPresenter());
-        photoRecycler.setAdapter(galleryAdapter);
+        favoriteAdapter = new FavoriteAdapter(presenter.getRecyclerFavoritePresenter());
+        photoRecycler.setAdapter(favoriteAdapter);
     }
 
     @Override
@@ -73,15 +77,9 @@ public class GalleryActivity extends MvpAppCompatActivity implements GalleryView
         startActivity(intent);
     }
 
-    @OnClick(R.id.fab_favorite)
-    public void showFavoriteActivity() {
-        Intent intent = new Intent(this, FavoriteActivity.class);
-        startActivity(intent);
-    }
-
     @Override
     public void updateRecyclerView() {
-        galleryAdapter.notifyDataSetChanged();
+        favoriteAdapter.notifyDataSetChanged();
     }
 
     @Override

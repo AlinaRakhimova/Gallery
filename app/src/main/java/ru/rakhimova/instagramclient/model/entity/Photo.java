@@ -8,10 +8,6 @@ import java.util.List;
 public class Photo {
 
     @Expose
-    @SerializedName("totalHits")
-    public int totalHits;
-
-    @Expose
     @SerializedName("hits")
     public List<Hit> hits;
 

@@ -1,5 +1,7 @@
 package ru.rakhimova.instagramclient.presenter;
 
+import android.annotation.SuppressLint;
+
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 
@@ -11,10 +13,10 @@ import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.SingleOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import ru.rakhimova.instagramclient.model.UserPreferences;
-import ru.rakhimova.instagramclient.model.database.HitDao;
+import ru.rakhimova.instagramclient.model.database.RoomHelper;
+import ru.rakhimova.instagramclient.model.entity.FavoriteHit;
 import ru.rakhimova.instagramclient.model.entity.Hit;
 import ru.rakhimova.instagramclient.model.entity.Photo;
 import ru.rakhimova.instagramclient.model.network.PixabayApi;
@@ -25,16 +27,16 @@ import ru.rakhimova.instagramclient.view.IViewHolder;
 public class GalleryPresenter extends MvpPresenter<GalleryView> {
 
     private List<Hit> hitList;
-
-    @Inject
-    PixabayApi pixabayApi;
     private RecyclerGalleryPresenter recyclerGalleryPresenter;
 
     @Inject
-    HitDao hitDao;
+    PixabayApi pixabayApi;
 
     @Inject
     UserPreferences userPreferences;
+
+    @Inject
+    RoomHelper roomHelper;
 
     public GalleryPresenter() {
         recyclerGalleryPresenter = new RecyclerGalleryPresenter();
@@ -51,17 +53,14 @@ public class GalleryPresenter extends MvpPresenter<GalleryView> {
         } else getPhotosFromDatabase();
     }
 
-    public List<Hit> getHitList() {
-        return hitList;
-    }
-
+    @SuppressLint("CheckResult")
     public void getPhotosFromServer() {
         getViewState().showProgressBar();
         Observable<Photo> single = pixabayApi.requestServer();
-        Disposable disposable = single.observeOn(AndroidSchedulers.mainThread()).subscribe(photos -> {
+        single.observeOn(AndroidSchedulers.mainThread()).subscribe(photos -> {
             hitList = photos.hits;
             ifRequestSuccess();
-            saveHitsList();
+            saveHitsListToDatabase();
         }, throwable -> getViewState().showToast("Ошибка получения данных с сервера: " + throwable.getMessage()));
     }
 
@@ -70,33 +69,57 @@ public class GalleryPresenter extends MvpPresenter<GalleryView> {
         getViewState().hideProgressBar();
     }
 
-    private void saveHitsList() {
-        Disposable disposable = insertListHits().observeOn(AndroidSchedulers.mainThread())
-                .subscribe(id -> {
-                    getViewState().showToast("Фотографии сохранены в БД");
-                    saveFirstEnter();
-                }, throwable -> getViewState().showToast("Ошибка сохранения в БД: " + throwable));
+    @SuppressLint("CheckResult")
+    private void saveHitsListToDatabase() {
+        saveHitListObservable().observeOn(AndroidSchedulers.mainThread())
+                .subscribe(id -> setFirstEnter(false), throwable -> getViewState().showToast("Ошибка сохранения в БД: " + throwable));
     }
 
-    private void saveFirstEnter() {
-        setFirstEnter(false);
-    }
-
-    private Single<Long> insertListHits() {
+    private Single<Long> saveHitListObservable() {
         return Single.create((SingleOnSubscribe<Long>) emitter -> {
-            List<Long> longList = hitDao.insertList(hitList);
+            List<Long> longList = roomHelper.insertPhotoList(hitList);
             emitter.onSuccess(longList.get(0));
         }).subscribeOn(Schedulers.io());
     }
 
-    public void getPhotosFromDatabase() {
+    @SuppressLint("CheckResult")
+    private void getPhotosFromDatabase() {
         getViewState().showProgressBar();
-        Disposable disposable = hitDao.getAll().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+        roomHelper.getPhotoList().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
                 .subscribe(hits -> {
                     hitList = hits;
                     ifRequestSuccess();
-                    getViewState().showToast("Данные загружены из БД");
                 }, throwable -> getViewState().showToast("Ошибка загрузки из БД: " + throwable));
+    }
+
+    @SuppressLint("CheckResult")
+    private void insertFavoritePhotoToDatabase(int idPhoto) {
+        insertFavoritePhotoToDatabaseObservable(idPhoto).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(hits -> getViewState().showToast("Фото сохранено в Избранное"),
+                        throwable -> getViewState().showToast("Ошибка сохранения в БД: " + throwable));
+    }
+
+    private Single<Long> insertFavoritePhotoToDatabaseObservable(int idPhoto) {
+        return Single.create((SingleOnSubscribe<Long>) emitter -> {
+            FavoriteHit favoriteHit = new FavoriteHit();
+            favoriteHit.setIdPhoto(idPhoto);
+            Long id = roomHelper.insertFavoritePhoto(favoriteHit);
+            emitter.onSuccess(id);
+        }).subscribeOn(Schedulers.io());
+    }
+
+    @SuppressLint("CheckResult")
+    private void deleteFavoritePhotoFromDatabase(int idPhoto) {
+        deleteFavoritePhotoToDatabaseObservable(idPhoto).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(hits -> getViewState().showToast("Фото удалено из Избранного"),
+                        throwable -> getViewState().showToast("Ошибка удаления из БД: " + throwable));
+    }
+
+    private Single<Integer> deleteFavoritePhotoToDatabaseObservable(int idPhoto) {
+        return Single.create((SingleOnSubscribe<Integer>) emitter -> {
+            int id = roomHelper.deleteFavoritePhoto(idPhoto);
+            emitter.onSuccess(id);
+        }).subscribeOn(Schedulers.io());
     }
 
     private boolean getFirstEnter() {
@@ -121,6 +144,18 @@ public class GalleryPresenter extends MvpPresenter<GalleryView> {
                 return hitList.size();
             }
             return 0;
+        }
+
+        @Override
+        public void onClickNoFavorite(IViewHolder holder) {
+            holder.setFavoriteImage(true);
+            insertFavoritePhotoToDatabase(hitList.get(holder.getPos()).getId());
+        }
+
+        @Override
+        public void onClickFavorite(IViewHolder holder) {
+            holder.setFavoriteImage(false);
+            deleteFavoritePhotoFromDatabase(hitList.get(holder.getPos()).getId());
         }
 
         @Override

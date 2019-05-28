@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <android.support.v7.widget.Toolbar
@@ -16,8 +17,21 @@
         android:name="rakhimova.ru.instagramclient.view.MainActivity"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="56dp"
         tools:context=".view.GalleryActivity"
         tools:listitem="@layout/fragment_photo" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_favorite"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        android:background="@drawable/round"
+        android:src="@drawable/ic_favorite_black_24dp"
+        app:backgroundTint="@android:color/background_light"
+        app:borderWidth="1dp"
+        app:fabSize="mini" />
 
     <ProgressBar
         android:id="@+id/progress_bar"
@@ -26,5 +40,4 @@
         android:layout_gravity="center"
         android:visibility="invisible" />
 
-
-</LinearLayout>
+</FrameLayout>

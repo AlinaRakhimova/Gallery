@@ -1,12 +1,13 @@
 package ru.rakhimova.instagramclient.presenter;
 
+import android.annotation.SuppressLint;
+
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 
 import javax.inject.Inject;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import ru.rakhimova.instagramclient.model.database.RoomHelper;
 import ru.rakhimova.instagramclient.view.DetailView;
@@ -24,13 +25,14 @@ public class DetailPresenter extends MvpPresenter<DetailView> {
         getDetailHitFromDatabase();
     }
 
+    @SuppressLint("CheckResult")
     private void getDetailHitFromDatabase() {
-        Disposable disposable = roomHelper.getHit(id).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+        roomHelper.getHit(id).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
                 .subscribe(hit -> {
                     String url = hit.getWebformatURL();
                     String title = hit.getTitle();
                     getViewState().loadPhoto(title, url);
-                    getViewState().showToast("Данные загружены из БД");
                 }, throwable -> getViewState().showToast("Ошибка загрузки из БД: " + throwable.getMessage()));
     }
+
 }

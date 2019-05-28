@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">Gallery</string>
+    <string name="app_name">Gallery</string>
     <string name="theme_name">Enter theme</string>
     <string name="enter_password">Enter password</string>
     <string name="enter_login">Enter login</string>
@@ -10,4 +10,5 @@
     <string name="share_star" translatable="false">Star</string>
     <string name="loop" translatable="false">loop</string>
     <string name="message">Login and password are expected</string>
+    <string name="bottom_text">Open favorite photos</string>
 </resources>

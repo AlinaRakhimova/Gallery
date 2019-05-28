@@ -2,9 +2,11 @@ package ru.rakhimova.instagramclient.view;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
@@ -18,15 +20,21 @@ import ru.rakhimova.instagramclient.di.App;
 import ru.rakhimova.instagramclient.model.GlideLoader;
 import ru.rakhimova.instagramclient.presenter.DetailPresenter;
 
-public class DetailActivity extends MvpAppCompatActivity implements DetailView {
+import static ru.rakhimova.instagramclient.model.Constants.ID;
 
-    public static final String ID = "id";
+public class DetailActivity extends MvpAppCompatActivity implements DetailView {
 
     @BindView(R.id.content_photo)
     ImageView photo;
 
     @BindView(R.id.title)
     TextView titleTV;
+
+    @BindView(R.id.favorite_border)
+    ImageButton favoriteBorder;
+
+    @BindView(R.id.favorite)
+    ImageButton favorite;
 
     @InjectPresenter
     DetailPresenter presenter;
@@ -44,6 +52,7 @@ public class DetailActivity extends MvpAppCompatActivity implements DetailView {
         ButterKnife.bind(this);
         App.getAppComponent().inject(this);
         App.getAppComponent().inject(presenter);
+        setFavoriteInvisible();
     }
 
     @Override
@@ -51,6 +60,11 @@ public class DetailActivity extends MvpAppCompatActivity implements DetailView {
         super.onStart();
         int id = getIntent().getIntExtra(ID, 0);
         presenter.onStart(id);
+    }
+
+    public void setFavoriteInvisible() {
+            favoriteBorder.setVisibility(View.INVISIBLE);
+            favorite.setVisibility(View.INVISIBLE);
     }
 
     @Override
@@ -61,8 +75,7 @@ public class DetailActivity extends MvpAppCompatActivity implements DetailView {
 
     @Override
     public void showToast(String message) {
-//        Toast.makeText(context, message, Toast.LENGTH_SHORT).show(); //FIXME Реализовать отображение toast
-        Log.d("Libraries7", message);
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
 }

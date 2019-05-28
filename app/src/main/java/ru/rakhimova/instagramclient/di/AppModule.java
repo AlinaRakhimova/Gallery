@@ -14,17 +14,19 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import ru.rakhimova.instagramclient.model.GlideLoader;
 import ru.rakhimova.instagramclient.model.UserPreferences;
 import ru.rakhimova.instagramclient.model.database.AppDatabase;
+import ru.rakhimova.instagramclient.model.database.FavoriteHitDao;
 import ru.rakhimova.instagramclient.model.database.HitDao;
 import ru.rakhimova.instagramclient.model.database.RoomHelper;
 import ru.rakhimova.instagramclient.model.network.PixabayApi;
 import ru.rakhimova.instagramclient.model.network.PixabayService;
 
+import static ru.rakhimova.instagramclient.model.Constants.BASE_URL;
+import static ru.rakhimova.instagramclient.model.Constants.DATABASE_NAME;
+
 @Module
 public
 class AppModule {
 
-    private static final String BASE_URL = "https://pixabay.com";
-    private static final String DATABASE_NAME = "photo_database";
     private Context context;
 
     public AppModule(Context context) {
@@ -50,6 +52,12 @@ class AppModule {
     HitDao getHitDao() {
         return getAppDatabase().hitDao();
     }
+
+    @Provides
+    FavoriteHitDao getFavoriteHitDao() {
+        return getAppDatabase().favoriteHitDao();
+    }
+
 
     @Provides
     UserPreferences getUserPreferences() {
